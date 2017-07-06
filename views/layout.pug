@@ -1,0 +1,111 @@
+extends ../_bootstrap
+append body
+    // Custom styles for this template
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js")
+    link(href='../stylesheets/dashboard.css', rel='stylesheet')
+    link(href='/stylesheets/style.css', rel='stylesheet')
+    nav.navbar.navbar-inverse.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/') Integrerbar
+            #navbar.navbar-collapse.collapse
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href='/') Oversikt
+                    //li
+                        a(href='#') Innstillinger
+                    li.dropdown
+                        if !user
+                            a(onclick='showLoginModal()') Logg Inn
+                        else
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
+                                | #{user.name}
+                                span.caret
+                            ul.dropdown-menu(role='menu')
+                                li
+                                    a(href='/forgot') Nullstill passord
+                                li
+                                    a(href='/logout') Logg ut
+
+
+                    li
+                        a(href='/help') Hjelp
+                    li.mob
+                        a(href='/calendar') Kalender
+                    li.mob
+                        a(href='/internList') Frivillige
+                    if user && user.admin === 'true'
+                        li.mob
+                            a(href='/registerUser') Legg til intern
+                        li.mob
+                            a(href='/addEvent') Legg til et event
+                        li.mob
+                            a(href='/addShift') Legg til vakt
+                //form.navbar-form.navbar-right
+                    input.form-control(type='text', placeholder='Search...')
+    .container-fluid
+        .row
+            .col-sm-3.col-md-2.sidebar
+                ul.nav.nav-sidebar
+                    li.active
+                        a(href='/')
+                            | Oversikt
+                            span.sr-only (current)
+                    li(class=title=='Profile' ? 'active': undefined)
+                        a(href='/calendar') Kalender
+                    //li
+                        a(href='/') TBA
+                    li
+                        a(href='/internList') Frivillige
+                ul.nav.nav-sidebar
+                    if user && user.admin === 'true'
+                        li
+                            a(href='/registerUser') Legg til intern
+                        li
+                            a(href='/addEvent') Legg til et event
+                        li
+                            a(href='/addShift') Legg til vakt
+                    //li
+                        a(href='') Another nav item
+                    //li
+                        a(href='') More navigation
+                //ul.nav.nav-sidebar
+                    li
+                        a(href='') Nav item again
+                    li
+                        a(href='') One more nav
+                    li
+                        a(href='') Another nav item
+    .modal.fade(id='loginModal',tabindex="-1",role="dialog",aria-labelledby=id + "Label" aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button",data-dismiss="modal")
+                        span(aria-hidden="true") &times;
+                        span.sr-only Close
+                    h4.modal-title(id="loginModal" + "Label")= 'Logg Inn'
+                .modal-body
+                    link(href='../stylesheets/signin.css', rel='stylesheet')
+                    .container
+                        form.form-signin(role='form', action="/login", method="POST")
+                            h2.form-signin-heading Vennligst logg inn
+                            label.sr-only(for='inputEmail') Epost
+                            input#inputEmail.form-control(type='email', placeholder='Epost', required='', autofocus=true, name='username')
+                            label.sr-only(for='inputPassword') Passord
+                            input#inputPassword.form-control(type='password', placeholder='Passord', required='', name='password')
+                            button.btn.btn-lg.btn-primary.btn-block(type='submit') Logg inn
+                            a(href='/forgot') Glemt passord?
+                            //br
+                            //a(href='/register') Opprett bruker
+                .modal-footer
+                    button.btn.btn-default(type="button",data-dismiss="modal") Lukk
+
+    script.
+        function showLoginModal (){
+            $('#loginModal').modal('show');
+        }

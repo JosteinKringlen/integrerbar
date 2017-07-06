@@ -1,0 +1,23 @@
+extends layout
+append styles
+    link(href='../stylesheets/signin.css', rel='stylesheet')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+append body
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Nullstill passord
+    #indent
+        .container
+            if messages.error
+                +alert-x-danger(messages.error)
+            if messages.info
+                +alert-x-info(messages.info)
+            if messages.success
+                +alert-x-success(messages.success)
+        block content
+            form(method='POST')
+                .form-group
+                    label(for='email') Epost
+                    input.form-control(type='text', name='email', autofocus)
+                button.btn.btn-primary(type='submit') Nullstill passord

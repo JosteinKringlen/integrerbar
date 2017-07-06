@@ -1,0 +1,31 @@
+extends layout
+append body
+    script(src='/scripts/dhtmlxscheduler.js')
+    link(rel='stylesheet', href='/scripts/dhtmlxscheduler.css')
+    script(type='text/javascript', charset='utf-8').
+        function init() {
+            scheduler.config.start_on_monday = true;
+            scheduler.init('scheduler_here',new Date(),"month");
+            scheduler.templates.xml_date = function(value){ return new Date(value); };
+            scheduler.load("/data", "json");
+            scheduler.config.xml_date="%Y-%m-%d %H:%i";
+            var dp = new dataProcessor("/data");
+            dp.init(scheduler);
+            dp.setTransactionMode("POST", false);
+        }
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Kalender
+    body(onload='init();')
+        #scheduler_here.dhx_cal_container.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main(style='width:75%; height:75%;')
+            .dhx_cal_navline
+                .dhx_cal_prev_button  
+                .dhx_cal_next_button  
+                .dhx_cal_today_button
+                .dhx_cal_date
+                .dhx_cal_tab(name='day_tab', style='right:204px;')
+                .dhx_cal_tab(name='week_tab', style='right:140px;')
+                .dhx_cal_tab(name='month_tab', style='right:76px;')
+            .dhx_cal_header
+            .dhx_cal_data

@@ -1,0 +1,44 @@
+extends layout
+append body
+
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Legg til intern
+    #indent
+        form(action="/registerUser/insert", method="post")
+            | Navn:
+            br
+            |
+            input(type='text', name='navn' required=true)
+            br
+            |  E-post:
+            br
+            |
+            input(type='email', name='epost' required=true)
+            br
+            | Telefonnummer
+            br
+            |
+            input(type='tel', name='telefonnummer' required=true)
+            br
+            | Aktiv
+            br
+            input(type='checkbox', name='aktiv')
+            br
+            | Ansvarsvakt
+            br
+            input(type='checkbox', name='skiftansvarlig')
+            br
+            | Styre
+            br
+            input(type='checkbox', name='styre')
+            br
+            br
+            button(type="submit") Submit
+
+    script.
+        $('input[type="checkbox"]').change(function () {
+            this.value = (Number(this.checked));
+        });

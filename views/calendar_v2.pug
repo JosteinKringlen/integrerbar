@@ -1,0 +1,51 @@
+extends layout
+append body
+    link(rel='stylesheet' href='/stylesheets/style.css')
+
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Liste over vakter
+
+    #indent
+        -var last = 1;
+        -var dups = [];
+        -var rest = [];
+        -var counter = 0;
+        for object in listOfShifts
+            if last == 1
+                - last = object.id
+                - dups.push(object.id, object.name, object.date, object.comments, object.opening, object.responsible)
+            unless last == object.id
+                - dups.push(object.id, object.name, object.date, object.comments, object.opening, object.responsible)
+                - last = object.id
+            - rest.push(object.id, object.navn, object.start_time, object.end_time)
+
+        - for (var i=0; i<dups.length;i+=6){
+        br
+        table(border='1')
+            tr
+                td(colspan='3')
+                    h2 !{dups[i+2]} - !{dups[i+1]}
+            tr
+                td(rowspan='100') !{dups[i+3]}
+            tr
+                td(colspan='2')
+                    b Skift
+            tr
+                td !{dups[i+4]}
+                td Åpning
+            - for (var j=counter; j<rest.length;j+=4){
+                tr
+                    td !{rest[j+1]}
+                    td !{rest[j+2]}-!{rest[j+3]}
+                -counter+=4
+                unless  rest[j+4] == null
+                    unless rest[j] == rest[j+4]
+                        - break
+            -}
+            tr
+                td !{dups[i+5]}
+                td Skiftansvarlig
+
+        -}

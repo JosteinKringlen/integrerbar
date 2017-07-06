@@ -1,0 +1,27 @@
+extends layout
+append body
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Legg til event
+    #indent
+        form(action="/addEvent/insert", method="post")
+            | Navn:
+            br
+            |
+            input(type='text', name='name' required=true)
+            br
+            |  Dato:
+            br
+            |
+            input(type='date', name='date' required=true)
+            br
+            |  Kommentar:
+            br
+            |
+            input(type='text', name='comments' required=false)
+            br
+            br
+            |
+            button(type="submit") Submit

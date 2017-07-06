@@ -1,0 +1,26 @@
+extends layout
+append styles
+    // Custom styles for this template
+    link(href='../stylesheets/signin.css', rel='stylesheet')
+    link(href='../stylesheets/style.css', rel='stylesheet')
+append body
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Please sign up
+    #indent
+        .container
+            if messages.error
+                +alert-x-danger(messages.error)
+            if messages.info
+                +alert-x-info(messages.info)
+            if messages.success
+                +alert-x-success(messages.success)
+        .container
+            form.form-signin(role='form', action="/signup", method="post")
+                label.sr-only(for='inputEmail') Email
+                input#inputEmail.form-control(type='text', placeholder='Email', required='', autofocus='', name='email')
+                label.sr-only(for='inputPassword') Password
+                input#inputPassword.form-control(type='password', placeholder='Password', required='', name='password')
+                button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign up
+

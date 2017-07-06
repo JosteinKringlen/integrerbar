@@ -1,0 +1,64 @@
+extends layout
+append body
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet")
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Legg til vakt
+    #indent
+        form(id="test" action="/addShift/insert", method="post")
+            | Velg event
+            br
+            select(id="choseEvent" name="event")
+                option(value="" disabled selected) Velg event
+                for day in shift
+                    option(value= day.id) !{day.date}  !{day.name}
+
+            -var length = 4
+            -for(var i = 0;i<length;i++){
+            br
+            | Vakt #{i+1}
+            br
+            select(id="navn", name="navn")
+                option(value="" selected=true disabled=true) Navn
+                for intern in everyone
+                    option(value=intern.id) !{intern.navn}
+
+            select(id="start_time", name="start_time" )
+                option(value="" selected=true disabled=true) Vakt fra
+                -for(var j = 0;j<=23;j++){
+                        option(value = j + ":00:00") #{j}:00
+                        option(value = j + ":30:00") #{j}:30
+                -}
+
+            select(id="end_time", name="end_time" )
+                option(value="" selected=true disabled=true) Vakt til
+                -for(var j = 0;j<=23;j++){
+                    option(value = j + ":00:00") #{j}:00
+                    option(value = j + ":30:00") #{j}:30
+                -}
+
+            break
+                -}
+            br
+            | Åpning
+            br
+            select(id="opening", name="opening")
+                option(value="" selected=true disabled=true) Navn
+                for intern in responsible
+                    option(value=intern.id) !{intern.navn}
+            br
+            | Ansvarsvakt
+            br
+            select(id="responsible", name="responsible")
+                option(value="" selected=true disabled=true) Navn
+                for intern in responsible
+                    option(value=intern.id) !{intern.navn}
+            br
+            button(type="submit", id='addShiftButton') Lagre dag
+    script.
+        $(document).ready(function () {
+            $("select").select2();
+        });

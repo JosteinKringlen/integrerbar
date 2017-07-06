@@ -1,0 +1,20 @@
+extends layout
+append styles
+    link(href='../stylesheets/signin.css', rel='stylesheet')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+append body
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Nullstill Passord
+    #indent
+        block content
+            form(method='POST')
+                .form-group
+                    label(for='password') Nytt Passord
+                    input.form-control(type='password', name='password', value='', placeholder='Nytt passord', autofocus=true)
+                .form-group
+                    label(for='confirm') Bekreft Passord
+                    input.form-control(type='password', name='confirm', value='', placeholder='Bekreft passord')
+                .form-group
+                    button.btn.btn-primary(type='submit') Oppdater Passord

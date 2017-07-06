@@ -1,0 +1,13 @@
+extends ../node_modules/pug-bootstrap/_bootstrap
+append styles
+    // Custom styles for this template
+    link(href='../stylesheets/signin.css', rel='stylesheet')
+block body
+    .container
+        form.form-signin(role='form', action="/passport/login",method="POST")
+            h2.form-signin-heading Please sign in
+            label.sr-only(for='inputEmail') Username
+            input#inputEmail.form-control(type='text', placeholder='Username', required='', autofocus='', name='username')
+            label.sr-only(for='inputPassword') Password
+            input#inputPassword.form-control(type='password', placeholder='Password', required='', name='password')
+            button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in

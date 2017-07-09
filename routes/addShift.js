@@ -2,7 +2,10 @@ const express = require('express');
 const mysql = require("mysql");
 const router = express.Router();
 const bodyParser = require('body-parser');
-const connect = require('../connections');
+
+//TODO: Switch these two before pushing to master/prod
+//const connect = require('../connections');
+const connect = require('../localConnections');
 
 
 let isAuthenticated = function (req, res, next) {

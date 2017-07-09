@@ -1,7 +1,10 @@
 const express = require('express');
 const mysql = require("mysql");
 const router = express.Router();
-const connect = require('../connections');
+
+//TODO: Switch these two before pushing to master/prod
+//const connect = require('../connections');
+const connect = require('../localConnections');
 
 router.get('/', function(req, res, next) {
 

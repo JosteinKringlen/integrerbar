@@ -12,7 +12,12 @@ const bCrypt = require('bcrypt');
 
 
 /////////////////////////////////////////////////
-const connect = require('./connections');
+
+//TODO: Switch these two before pushing to master/prod
+//const connect = require('./connections');
+const connect = require('./localConnections');
+
+
 const mongoose = require('mongoose');
 const passport = require('passport');
 mongoose.Promise = global.Promise;

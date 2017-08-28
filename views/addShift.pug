@@ -8,10 +8,26 @@ append body
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
                 h1.page-header Legg til vakt
     #indent
-        //form(id="test" action="/addShift/insert", method="post")
-            | Vakt
-            br
-            select(id="navn", name="navn")
+        table(border="1")
+            thead
+            tbody
+            for object in shift
+                tr
+                    for subobject in object
+                        td= subobject
+                    td
+                        button(type="submit" style="width:100%") Slett vakt
+
+
+        form(id="test" action="/addShift/insert", method="post")
+
+            select(id="shiftType", name="shiftType")
+                option(value="" selected=true disabled=true) Vakttype
+                option(value="Opening") Åpning
+                option(value="Shift") Vanlig vakt
+                option(value="Responsible") Ansvarsvakt
+
+            select(id="name", name="name")
                 option(value="" selected=true disabled=true) Navn
                 for intern in everyone
                     option(value=intern.id) !{intern.navn}
@@ -19,35 +35,19 @@ append body
             select(id="start_time", name="start_time" )
                 option(value="" selected=true disabled=true) Vakt fra
                 -for(var j = 0;j<=23;j++){
-                        option(value = j + ":00:00") #{j}:00
-                        option(value = j + ":30:00") #{j}:30
+                option(value = j + ":00:00") #{j}:00
+                option(value = j + ":30:00") #{j}:30
                 -}
 
             select(id="end_time", name="end_time" )
                 option(value="" selected=true disabled=true) Vakt til
                 -for(var j = 0;j<=23;j++){
-                    option(value = j + ":00:00") #{j}:00
-                    option(value = j + ":30:00") #{j}:30
+                option(value = j + ":00:00") #{j}:00
+                option(value = j + ":30:00") #{j}:30
                 -}
 
-            break
+            button(type="submit", id='addShiftButton') Legg til vakt
 
-            br
-            | Åpning
-            br
-            select(id="opening", name="opening")
-                option(value="" selected=true disabled=true) Navn
-                for intern in responsible
-                    option(value=intern.id) !{intern.navn}
-            br
-            | Ansvarsvakt
-            br
-            select(id="responsible", name="responsible")
-                option(value="" selected=true disabled=true) Navn
-                for intern in responsible
-                    option(value=intern.id) !{intern.navn}
-            br
-            button(type="submit", id='addShiftButton') Lagre dag
     script.
         $(document).ready(function () {
             $("select").select2();

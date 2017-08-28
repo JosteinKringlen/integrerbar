@@ -37,7 +37,7 @@ const registerUser = require('./routes/registerUser');
 const addEvent = require('./routes/addEvent');
 const forgot = require('./routes/forgot');
 const help = require('./routes/help');
-
+const events = require('./routes/events');
 const app = express();
 
 // view engine setup
@@ -92,6 +92,7 @@ app.use('/registerUser', registerUser);
 app.use('/addEvent', addEvent);
 app.use('/forgot', forgot);
 app.use('/help', help);
+app.use('/events', events);
 
 app.post('/forgot', function(req, res, next) {
     async.waterfall([

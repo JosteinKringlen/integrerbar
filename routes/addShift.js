@@ -15,93 +15,9 @@ let isAuthenticated = function (req, res, next) {
     res.redirect('/');
 };
 
-router.get('/', isAuthenticated, findResponsible, findEveryone, findShift, renderPage);
-
-/**
- * Connects to database, find all interns that can work a responsible shift and moves on to the next quarry.
- *
- * @param req
- * @param res
- * @param next
- */
-function findResponsible(req, res, next) {
-
-    const con = mysql.createConnection({
-        host: connect.sqlUrl.host,
-        user : connect.sqlUrl.user,
-        password: connect.sqlUrl.password,
-        dateStrings: 'date'
-
-    });
-
-    con.query('SELECT id, navn FROM integrerbar2.intern WHERE aktiv = 1 and skiftansvarlig = 1 ORDER BY navn', function (err, rows) {
-        if (err) throw err;
-        req.responsible = rows;
-        con.end(function(err) {});
-        return next();
-
-    });
-}
-
-/**
- * Connects to database, find all interns and moves on to the rendering,
- *
- * @param req
- * @param res
- * @param next
- */
-function findEveryone(req, res, next) {
-
-    const con = mysql.createConnection({
-        host: connect.sqlUrl.host,
-        user : connect.sqlUrl.user,
-        password: connect.sqlUrl.password,
-        dateStrings: 'date'
-
-    });
-
-    con.query('SELECT id, navn FROM integrerbar2.intern WHERE aktiv = 1 ORDER BY navn',function(err,rows) {
-        if (err) throw err;
-        req.everyone = rows;
-        con.end(function(err) {});
-        return next();
-    });
-}
-
-function findShift(req, res, next) {
-
-    const con = mysql.createConnection({
-        host: connect.sqlUrl.host,
-        user : connect.sqlUrl.user,
-        password: connect.sqlUrl.password,
-        dateStrings: 'date'
-
-    });
-
-    con.query("select id, date ,name FROM integrerbar2.skift ORDER BY date",function(err,rows) {
-        if (err) throw err;
-        req.shift = rows;
-        con.end(function(err) {});
-        return next();
-    });
-
-}
-
-/**
- * Renders the page and sends quarry results
- *
- * @param req
- * @param res
- */
-function renderPage(req, res) {
-    res.render('addShift', {
-        title: 'Add shift',
-        everyone: req.everyone,
-        responsible: req.responsible,
-        shift: req.shift,
-        user: req.user
-    });
-}
+router.get('/', isAuthenticated, function(req, res, next) {
+    res.render('addShift', { title: 'addShift' ,user: req.user});
+});
 
 router.post('/insert',function(req, res){
 

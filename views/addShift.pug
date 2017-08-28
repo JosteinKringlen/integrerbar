@@ -8,18 +8,8 @@ append body
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
                 h1.page-header Legg til vakt
     #indent
-        form(id="test" action="/addShift/insert", method="post")
-            | Velg event
-            br
-            select(id="choseEvent" name="event")
-                option(value="" disabled selected) Velg event
-                for day in shift
-                    option(value= day.id) !{day.date}  !{day.name}
-
-            -var length = 4
-            -for(var i = 0;i<length;i++){
-            br
-            | Vakt #{i+1}
+        //form(id="test" action="/addShift/insert", method="post")
+            | Vakt
             br
             select(id="navn", name="navn")
                 option(value="" selected=true disabled=true) Navn
@@ -41,7 +31,7 @@ append body
                 -}
 
             break
-                -}
+
             br
             | Åpning
             br

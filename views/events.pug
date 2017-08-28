@@ -1,0 +1,14 @@
+extends layout
+append body
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Eventer
+    #indent
+        for object in listOfEvents
+                    form(id="test" action="/addShift", method="get")
+                        input(type="text", id='submit' , name = 'submit' , value = object.id)
+                        button(type="submit") !{object.event}
+
+

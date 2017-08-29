@@ -46,6 +46,9 @@ append body
                 option(value = j + ":30:00") #{j}:30
                 -}
 
+            select(id="eventNumber", name="eventNumber")
+                option(value=selectedEvent) #{selectedEvent}
+
             button(type="submit", id='addShiftButton') Legg til vakt
 
     script.

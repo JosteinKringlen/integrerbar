@@ -30,7 +30,8 @@ function findResponsible(req, res, next) {
         host: connect.sqlUrl.host,
         user : connect.sqlUrl.user,
         password: connect.sqlUrl.password,
-        dateStrings: 'date'
+        dateStrings: 'date',
+        connectTimeout: 60000
 
     });
 
@@ -56,7 +57,8 @@ function findEveryone(req, res, next) {
         host: connect.sqlUrl.host,
         user : connect.sqlUrl.user,
         password: connect.sqlUrl.password,
-        dateStrings: 'date'
+        dateStrings: 'date',
+        connectTimeout: 60000
 
     });
 
@@ -81,15 +83,30 @@ function findShift(req, res, next) {
         host: connect.sqlUrl.host,
         user : connect.sqlUrl.user,
         password: connect.sqlUrl.password,
-        dateStrings: 'date'
+        dateStrings: 'date',
+        connectTimeout: 60000
 
     });
 
+    let passedVariable = req.query.valid;
+
     let choseEvent = (req.body.choseEvent);
-    console.log(choseEvent + "      Katt");
+
+
+    let id;
+
+    if (passedVariable == null) {
+        id = choseEvent;
+        req.selectedEvent = choseEvent;
+        console.log(id + "  1  " + choseEvent)
+    }else {
+        id = passedVariable;
+        req.selectedEvent = passedVariable;
+        console.log(id + "  2  " + passedVariable)
+    }
 
     //TODO: Make the where statement editable
-    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[choseEvent],function(err,rows) {
+    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});
@@ -110,6 +127,7 @@ function renderPage(req, res) {
         everyone: req.everyone,
         responsible: req.responsible,
         shift: req.shift,
+        selectedEvent: req.selectedEvent,
         user: req.user
     });
     //res.render('addShift', { title: 'addShift' ,user: req.user});
@@ -130,6 +148,7 @@ router.post('/insert',function(req, res){
     let end = (req.body.end_time);
     let event = (req.body.event);
     let shiftType = (req.body.shiftType);
+    let eventNumber = (req.body.eventNumber);
 
 
     let opening = false;
@@ -144,13 +163,13 @@ router.post('/insert',function(req, res){
 
     //TODO: Remove shift_id constant
     if(typeof name === "string") {
-        con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (23, ?, ? ,?,false);", [/*event,*/ name, start, end], function (err, result) {
+        con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [eventNumber, name, start, end], function (err, result) {
             if (err) throw err;
         });
 
     }else {
         for (let i = 0; i < name.length; i++) {
-            con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [/*event,*/ name[i], start[i], end[i]], function (err, result) {
+            con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [eventNumber, name[i], start[i], end[i]], function (err, result) {
                 if (err) throw err;
             });
         }
@@ -160,8 +179,8 @@ router.post('/insert',function(req, res){
     con.query("update integrerbar2.skift set opening = ?, responsible = ? where id = ?",[opening,responsible,event], function (err, result) {
         if (err) throw err;
     });
-
-    res.redirect('/addShift');
+    let string = encodeURIComponent(eventNumber);
+    res.redirect(307,'/addShift/?valid=' + string);
     con.end(function(err) {});
 
 });

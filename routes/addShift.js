@@ -15,7 +15,7 @@ let isAuthenticated = function (req, res, next) {
     res.redirect('/');
 };
 
-router.get('/', isAuthenticated, findResponsible, findEveryone,findShift, renderPage);
+router.post('/', isAuthenticated, findResponsible, findEveryone, findShift, renderPage);
 
 /**
  * Connects to database, find all interns that can work a responsible shift and moves on to the next quarry.
@@ -85,8 +85,11 @@ function findShift(req, res, next) {
 
     });
 
+    let choseEvent = (req.body.choseEvent);
+    console.log(choseEvent + "      Katt");
+
     //TODO: Make the where statement editable
-    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = 23 ORDER BY start_time",function(err,rows) {
+    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[choseEvent],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});

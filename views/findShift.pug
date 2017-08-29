@@ -1,0 +1,15 @@
+extends layout
+append body
+    link(rel='stylesheet' href='/stylesheets/style.css')
+
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Velg Event
+    #indent
+        form(id="test" action="/addShift", method="post")
+            select(id="choseEvent" name="choseEvent")
+                option(value="" disabled selected) Velg event
+                for day in listOfShift
+                    option(value= day.id) !{day.date}  !{day.name}
+            button(type="submit", id='chooseEventButton') Velg event

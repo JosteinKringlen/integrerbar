@@ -38,6 +38,7 @@ const addEvent = require('./routes/addEvent');
 const forgot = require('./routes/forgot');
 const help = require('./routes/help');
 const events = require('./routes/events');
+const findShift = require('./routes/findShift');
 const app = express();
 
 // view engine setup
@@ -93,6 +94,7 @@ app.use('/addEvent', addEvent);
 app.use('/forgot', forgot);
 app.use('/help', help);
 app.use('/events', events);
+app.use('/findShift', findShift);
 
 app.post('/forgot', function(req, res, next) {
     async.waterfall([

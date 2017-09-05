@@ -15,7 +15,18 @@ let isAuthenticated = function (req, res, next) {
     res.redirect('/');
 };
 
+let isInfoPassed = function (req, res, next) {
+    if(req.body.eventNumber != null)
+        return next();
+
+    res.redirect('/')
+};
+
 router.post('/', isAuthenticated, findResponsible, findEveryone, findShift, renderPage);
+
+router.get('/', isAuthenticated, isInfoPassed, function (req, res) {
+    renderPage(req,res)
+})
 
 /**
  * Connects to database, find all interns that can work a responsible shift and moves on to the next quarry.

@@ -3,6 +3,10 @@ const mysql = require("mysql");
 const router = express.Router();
 const bodyParser = require('body-parser');
 
+
+var con;
+
+
 //TODO: Switch these two before pushing to master/prod
 //const connect = require('../connections');
 const connect = require('../localConnections');
@@ -37,7 +41,7 @@ router.get('/', isAuthenticated, isInfoPassed, function (req, res) {
  */
 function findResponsible(req, res, next) {
 
-    const con = mysql.createConnection({
+    con = mysql.createConnection({
         host: connect.sqlUrl.host,
         user : connect.sqlUrl.user,
         password: connect.sqlUrl.password,
@@ -49,7 +53,7 @@ function findResponsible(req, res, next) {
     con.query('SELECT id, navn FROM integrerbar2.intern WHERE aktiv = 1 and skiftansvarlig = 1 ORDER BY navn', function (err, rows) {
         if (err) throw err;
         req.responsible = rows;
-        con.end(function(err) {});
+        //con.end(function(err) {});
         return next();
 
     });
@@ -64,19 +68,10 @@ function findResponsible(req, res, next) {
  */
 function findEveryone(req, res, next) {
 
-    const con = mysql.createConnection({
-        host: connect.sqlUrl.host,
-        user : connect.sqlUrl.user,
-        password: connect.sqlUrl.password,
-        dateStrings: 'date',
-        connectTimeout: 60000
-
-    });
-
     con.query('SELECT id, navn FROM integrerbar2.intern WHERE aktiv = 1 ORDER BY navn',function(err,rows) {
         if (err) throw err;
         req.everyone = rows;
-        con.end(function(err) {});
+        //con.end(function(err) {});
         return next();
     });
 }
@@ -89,15 +84,6 @@ function findEveryone(req, res, next) {
  * @param next
  */
 function findShift(req, res, next) {
-
-    const con = mysql.createConnection({
-        host: connect.sqlUrl.host,
-        user : connect.sqlUrl.user,
-        password: connect.sqlUrl.password,
-        dateStrings: 'date',
-        connectTimeout: 60000
-
-    });
 
     let passedVariable = req.query.valid;
 
@@ -172,7 +158,6 @@ router.post('/insert',function(req, res){
 
     console.log(opening + " " + responsible);
 
-    //TODO: Remove shift_id constant
     if(typeof name === "string") {
         con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [eventNumber, name, start, end], function (err, result) {
             if (err) throw err;

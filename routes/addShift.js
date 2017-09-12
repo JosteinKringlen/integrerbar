@@ -103,7 +103,7 @@ function findShift(req, res, next) {
     }
 
     //TODO: Make the where statement editable
-    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
+    con.query("select navn, start_time, end_time, skift_id, intern_id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});

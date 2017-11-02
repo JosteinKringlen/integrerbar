@@ -103,7 +103,7 @@ function findShift(req, res, next) {
     }
 
     //TODO: Make the where statement editable
-    con.query("select navn, start_time, end_time from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
+    con.query("select navn, start_time, end_time, CONCAT(skift_id,'-', intern_id) AS id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});
@@ -180,5 +180,30 @@ router.post('/insert',function(req, res){
     con.end(function(err) {});
 
 });
+
+router.post('/delete',function(req, res){
+
+    const con = mysql.createConnection({
+        host: connect.sqlUrl.host,
+        user : connect.sqlUrl.user,
+        password: connect.sqlUrl.password,
+        dateStrings: 'date'
+
+    });
+
+    let id = (req.body.button);
+
+    let ids = id.split("-");
+    console.log(ids);
+
+    con.query("DELETE FROM integrerbar2.vakter WHERE skift_id = ? and intern_id = ?;",[ids[0],ids[1]], function (err, result) {
+        if (err) throw err;
+    });
+
+    let string = encodeURIComponent(ids[0]);
+    res.redirect(307,'/addShift/?valid=' + string);
+
+});
+
 
 module.exports = router;

@@ -14,10 +14,13 @@ append body
             for object in shift
                 tr
                     for subobject in object
-                        td= subobject
-                    td
-                        button(type="submit" style="width:100%") Slett vakt
+                        if(subobject == object.id)
+                            td
+                                form(id="test" action="/addShift/delete", method="post")
+                                    button(type="submit" value=subobject style = "width:100%" name="button" id="button") Slett vakt
 
+                        else
+                            td= subobject
 
         form(id="test" action="/addShift/insert", method="post")
 

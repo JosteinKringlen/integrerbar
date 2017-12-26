@@ -19,33 +19,27 @@ append body
             unless last == object.id
                 - dups.push(object.id, object.name, object.date, object.comments, object.opening, object.responsible)
                 - last = object.id
-            - rest.push(object.id, object.navn, object.start_time, object.end_time)
+            - rest.push(object.id, object.navn, object.start_time, object.end_time, object.type)
 
         - for (var i=0; i<dups.length;i+=6){
         br
         table(border='1')
             tr
-                td(colspan='3')
+                td(colspan='4')
                     h2 !{dups[i+2]} - !{dups[i+1]}
             tr
                 td(rowspan='100') !{dups[i+3]}
             tr
-                td(colspan='2')
+                td(colspan='3')
                     b Skift
-            tr
-                td !{dups[i+4]}
-                td Åpning
-            - for (var j=counter; j<rest.length;j+=4){
+            - for (var j=counter; j<rest.length;j+=5){
                 tr
+                    td !{rest[j+4]}
                     td !{rest[j+1]}
                     td !{rest[j+2]}-!{rest[j+3]}
                 -counter+=4
-                unless  rest[j+4] == null
-                    unless rest[j] == rest[j+4]
+                unless  rest[j+5] == null
+                    unless rest[j] == rest[j+5]
                         - break
             -}
-            tr
-                td !{dups[i+5]}
-                td Skiftansvarlig
-
         -}

@@ -14,8 +14,8 @@ const bCrypt = require('bcrypt');
 /////////////////////////////////////////////////
 
 //TODO: Switch these two before pushing to master/prod
-const connect = require('./connections');
-//const connect = require('./localConnections');
+//const connect = require('./connections');
+const connect = require('./localConnections');
 
 
 const mongoose = require('mongoose');

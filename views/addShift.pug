@@ -26,9 +26,9 @@ append body
 
             select(id="shiftType", name="shiftType")
                 option(value="" selected=true disabled=true) Vakttype
-                option(value="Opening") Åpning
-                option(value="Shift") Vanlig vakt
-                option(value="Responsible") Ansvarsvakt
+                option(value="Åpning") Åpning
+                option(value="Vakt") Vanlig vakt
+                option(value="Ansvarsvakt") Ansvarsvakt
 
             select(id="name", name="name")
                 option(value="" selected=true disabled=true) Navn
@@ -49,7 +49,7 @@ append body
                 option(value = j + ":30:00") #{j}:30
                 -}
 
-            select(id="eventNumber", name="eventNumber")
+            select(id="eventNumber", name="eventNumber", class="eventNumberBox")
                 option(value=selectedEvent) #{selectedEvent}
 
             button(type="submit", id='addShiftButton') Legg til vakt

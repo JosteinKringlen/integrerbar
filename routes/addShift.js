@@ -8,8 +8,8 @@ let con;
 
 
 //TODO: Switch these two before pushing to master/prod
-const connect = require('../connections');
-//const connect = require('../localConnections');
+//const connect = require('../connections');
+const connect = require('../localConnections');
 
 
 let isAuthenticated = function (req, res, next) {
@@ -103,7 +103,7 @@ function findShift(req, res, next) {
     }
 
     //TODO: Make the where statement editable
-    con.query("select navn, start_time, end_time, CONCAT(skift_id,'-', intern_id) AS id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? ORDER BY start_time",[id],function(err,rows) {
+    con.query("select type, navn, start_time, end_time, CONCAT(skift_id,'-', intern_id) AS id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? order by vakter.start_time, case when type = 'Åpning' then 1 when type = 'Vakt' then 2 when type = 'Ansvarsvakt' then 3 end",[id],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});
@@ -159,22 +159,22 @@ router.post('/insert',function(req, res){
     console.log(opening + " " + responsible);
 
     if(typeof name === "string") {
-        con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [eventNumber, name, start, end], function (err, result) {
+        con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency, type) VALUES (?, ?, ? ,?,false,?);", [eventNumber, name, start, end, shiftType], function (err, result) {
             if (err) throw err;
         });
 
     }else {
         for (let i = 0; i < name.length; i++) {
-            con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency) VALUES (?, ?, ? ,?,false);", [eventNumber, name[i], start[i], end[i]], function (err, result) {
+            con.query("INSERT INTO integrerbar2.vakter (skift_id, intern_id, start_time, end_time,emergency, type) VALUES (?, ?, ? ,?,false,?);", [eventNumber, name[i], start[i], end[i], shiftType[i]], function (err, result) {
                 if (err) throw err;
             });
         }
     }
 
 
-    con.query("update integrerbar2.skift set opening = ?, responsible = ? where id = ?",[opening,responsible,event], function (err, result) {
+    /*con.query("update integrerbar2.skift set opening = ?, responsible = ? where id = ?",[opening,responsible,event], function (err, result) {
         if (err) throw err;
-    });
+    });*/
     let string = encodeURIComponent(eventNumber);
     res.redirect(307,'/addShift/?valid=' + string);
     con.end(function(err) {});

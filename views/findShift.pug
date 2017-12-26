@@ -7,9 +7,13 @@ append body
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
                 h1.page-header Velg Event
     #indent
-        form(id="test" action="/addShift", method="post")
-            select(id="choseEvent" name="choseEvent")
-                option(value="" disabled selected) Velg event
-                for day in listOfShift
-                    option(value= day.id) !{day.date}  !{day.name}
-            button(type="submit", id='chooseEventButton') Velg event
+        table(border="1")
+            thead
+            tbody
+            for day in listOfShift
+                tr
+                    td= day.date
+                    td= day.name
+                    td
+                        form(id="test" action="/addShift", method="post")
+                            button(type="submit" value=day.id style = "width:100%" name="choseEvent" id="choseEvent") Velg event

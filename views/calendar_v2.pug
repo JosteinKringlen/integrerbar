@@ -8,20 +8,31 @@ append body
                 h1.page-header Liste over vakter
 
     #indent
+
+        table(border="1")
+            thead
+            tbody
+            for object in listOfShifts
+                tr
+                    for subobject in object
+                        td= subobject
+
+
+
         -var last = 1;
         -var dups = [];
         -var rest = [];
         -var counter = 0;
         for object in listOfShifts
             if last == 1
-                - last = object.id
-                - dups.push(object.id, object.name, object.date, object.comments, object.opening, object.responsible)
-            unless last == object.id
-                - dups.push(object.id, object.name, object.date, object.comments, object.opening, object.responsible)
-                - last = object.id
-            - rest.push(object.id, object.navn, object.start_time, object.end_time, object.type)
+                - last = object.skift_id
+                - dups.push(object.skift_id, object.name, object.date, object.comments)
+            unless last == object.skift_id
+                - dups.push(object.skift_id, object.name, object.date, object.comments)
+                - last = object.skift_id
+            - rest.push(object.skift_id, object.navn, object.start_time, object.end_time, object.type)
 
-        - for (var i=0; i<dups.length;i+=6){
+        - for (var i=0; i<dups.length;i+=4){
         br
         table(border='1')
             tr
@@ -37,7 +48,7 @@ append body
                     td !{rest[j+4]}
                     td !{rest[j+1]}
                     td !{rest[j+2]}-!{rest[j+3]}
-                -counter+=4
+                -counter+=5
                 unless  rest[j+5] == null
                     unless rest[j] == rest[j+5]
                         - break

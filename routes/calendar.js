@@ -45,10 +45,10 @@ router.get('/'/*,isAuthenticated*/,findName,function(req, res, next) {
         dateStrings: 'date'
     });
 
-    con.query('select vakter.skift_id as id, date,comments, name,tableIntern.navn, vakter.start_time ,vakter.end_time, vakter.type \n' +
+    con.query('select vakter.skift_id, date,comments, name,tableIntern.navn, vakter.start_time ,vakter.end_time, vakter.type \n' +
         'from integrerbar2.vakter \n' +
         'inner join integrerbar2.skift on integrerbar2.vakter.skift_id=skift.id \n' +
-        'inner join integrerbar2.intern as tableIntern on integrerbar2.vakter.intern_id=tableIntern.id order by vakter.start_time, case when type = "Åpning" then 1 when type = "Vakt" then 2 when type = "Ansvarsvakt" then 3 end', function(err, rows) {
+        'inner join integrerbar2.intern as tableIntern on integrerbar2.vakter.intern_id=tableIntern.id order by skift.date, vakter.start_time, case when type = "Åpning" then 1 when type = "Vakt" then 2 when type = "Ansvarsvakt" then 3 end', function(err, rows) {
         if(err) throw err;
 
         res.render('calendar_v2', {

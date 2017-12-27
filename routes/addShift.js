@@ -103,13 +103,12 @@ function findShift(req, res, next) {
     }
 
     //TODO: Make the where statement editable
-    con.query("select type, navn, start_time, end_time, CONCAT(skift_id,'-', intern_id) AS id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? order by vakter.start_time, case when type = 'Åpning' then 1 when type = 'Vakt' then 2 when type = 'Ansvarsvakt' then 3 end",[id],function(err,rows) {
+    con.query("select type, navn, start_time, end_time, CONCAT(skift_id,'-',vakter.id) as id from integrerbar2.skift INNER JOIN integrerbar2.vakter ON integrerbar2.skift.id=integrerbar2.vakter.skift_id INNER JOIN integrerbar2.intern ON integrerbar2.intern.id=integrerbar2.vakter.intern_id where integrerbar2.skift.id = ? order by skift.date, vakter.start_time, case when type = 'Åpning' then 1 when type = 'Vakt' then 2 when type = 'Ansvarsvakt' then 3 end",[id],function(err,rows) {
         if (err) throw err;
         req.shift = rows;
         con.end(function(err) {});
         return next();
     });
-
 }
 
 /**
@@ -196,7 +195,7 @@ router.post('/delete',function(req, res){
     let ids = id.split("-");
     console.log(ids);
 
-    con.query("DELETE FROM integrerbar2.vakter WHERE skift_id = ? and intern_id = ?;",[ids[0],ids[1]], function (err, result) {
+    con.query("DELETE FROM integrerbar2.vakter WHERE id = ?;",ids[1], function (err, result) {
         if (err) throw err;
     });
 

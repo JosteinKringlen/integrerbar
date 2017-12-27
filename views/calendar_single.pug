@@ -3,6 +3,8 @@ append body
     script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
     link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet")
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
+
 
     .container-fluid
         .row
@@ -13,6 +15,12 @@ append body
         table(border="1")
             thead
             tbody
+                tr
+                    th="Dato"
+                    th="Type vakt"
+                    th="Start"
+                    th="Slutt"
+                    th="Navn på event"
             for object in listOfShifts
                 tr
                     for subobject in object

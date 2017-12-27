@@ -1,6 +1,7 @@
 extends layout
 append body
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
 
     .container-fluid
         .row
@@ -10,6 +11,10 @@ append body
         table(border="1")
             thead
             tbody
+                tr
+                    th="Dato"
+                    th="Navn"
+                    th="Velg"
             for day in listOfShift
                 tr
                     td= day.date

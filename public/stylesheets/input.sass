@@ -1,0 +1,63 @@
+input
+  line-height: normal
+  font-size: 30px
+  width: 50vw
+  border-color: #292828
+  text-align: center
+  color: #333
+
+.checkBox
+  width: 120px
+  height: 40px
+  background-color: #bd3b3b
+  margin: 20px 60px
+
+  border-radius: 50px
+  position: relative
+
+.checkBox:before
+  content: 'Yes'
+  position: absolute
+  top: 12px
+  left: 13px
+  height: 2px
+  color: white
+  font-size: 16px
+
+.checkBox:after
+  content: 'No'
+  position: absolute
+  top: 12px
+  left: 84px
+  height: 2px
+  color: white
+  font-size: 16px
+
+.checkBox label
+  display: block
+  width: 52px
+  height: 22px
+  border-radius: 50px
+
+  transition: all .5s ease
+  cursor: pointer
+  position: absolute
+  top: 9px
+  z-index: 1
+  left: 12px
+  background: white
+
+.checkBox input[type=checkbox]:checked + label
+  left: 60px
+  background: white
+
+input[type=checkbox]
+  visibility: hidden
+
+button
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif
+  background-color: #bd3b3b
+  color: white
+  border-radius: 10px
+  font-size: 30px
+  width: 50vw

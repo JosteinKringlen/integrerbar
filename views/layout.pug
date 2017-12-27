@@ -34,18 +34,18 @@ append body
 
 
                     li
-                        a(href='/help') Hjelp
+                        a(href='/help' class='sideButton') Hjelp
                     li.mob
-                        a(href='/calendar') Kalender
+                        a(href='/calendar' class='sideButton') Kalender
                     li.mob
-                        a(href='/internList') Frivillige
+                        a(href='/internList' class='sideButton') Frivillige
                     if user && user.admin === 'true'
                         li.mob
-                            a(href='/registerUser') Legg til intern
+                            a(href='/registerUser' class='sideButton') Legg til intern
                         li.mob
-                            a(href='/addEvent') Legg til et event
+                            a(href='/addEvent' class='sideButton') Legg til et event
                         li.mob
-                            a(href='/findShift') Legg til vakt
+                            a(href='/findShift' class='sideButton') Legg til vakt
                 //form.navbar-form.navbar-right
                     input.form-control(type='text', placeholder='Search...')
     .container-fluid

@@ -3,6 +3,8 @@ append body
     script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
     link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet")
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
+
 
     .container-fluid
         .row
@@ -37,7 +39,7 @@ append body
         br
         table(border='1')
             tr
-                td(colspan='4')
+                th(colspan='4')
                     h2 !{dups[i+2]} - !{dups[i+1]}
             tr
                 td(rowspan='100') !{dups[i+3]}

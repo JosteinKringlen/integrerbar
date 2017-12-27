@@ -1,26 +1,23 @@
 extends layout
 append body
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
+    link(rel='stylesheet' href='/stylesheets/input.css')
+
     .container-fluid
         .row
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
                 h1.page-header Legg til event
     #indent
         form(action="/addEvent/insert", method="post")
-            | Navn:
             br
-            |
-            input(type='text', name='name' required=true)
+            input(type='text', name='name' required=true placeholder="Navn")
             br
-            |  Dato:
             br
-            |
-            input(type='date', name='date' required=true)
+            input(type='text', name='date' required=true placeholder="Dato" onfocus="(this.type='date')")
             br
-            |  Kommentar:
             br
-            |
-            input(type='text', name='comments' required=false)
+            input(type='text', name='comments' required=false placeholder="Kommentar")
             br
             br
             |

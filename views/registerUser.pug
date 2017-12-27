@@ -1,31 +1,29 @@
 extends layout
 append body
-
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
+    link(rel='stylesheet' href='/stylesheets/input.css')
+
     .container-fluid
         .row
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
                 h1.page-header Legg til intern
     #indent
         form(action="/registerUser/insert", method="post")
-            | Navn:
             br
-            |
-            input(type='text', name='navn' required=true)
+            input(type='text', name='navn' required=true placeholder="Navn")
             br
-            |  E-post:
             br
-            |
-            input(type='email', name='epost' required=true)
+            input(type='email', name='epost' required=true placeholder="E-mail")
             br
-            | Telefonnummer:
             br
-            |
-            input(type='tel', name='telefonnummer' required=true)
+            input(type='tel', name='telefonnummer' required=true placeholder="Telefonnummer")
             br
-            | Ansvarsvakt?
+            h3 Ansvarsvakt?
             br
-            input(type='checkbox', name='skiftansvarlig')
+            div(class="checkBox")
+                input(type='checkbox', value="1" name='skiftansvarlig' id="checkBoxInput")
+                label(for="checkBoxInput")
             br
             br
             button(type="submit") Submit

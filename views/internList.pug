@@ -1,6 +1,7 @@
 extends layout
 append body
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/tables.css')
 
     .container-fluid
         .row
@@ -11,9 +12,9 @@ append body
             thead
             tbody
                 tr
-                    td="Navn"
-                    td="E-mail"
-                    td="Mobilnummer"
+                    th="Navn"
+                    th="E-mail"
+                    th="Mobilnummer"
             for object in listOfInterns
                 tr
                     for subobject in object

@@ -1,5 +1,7 @@
 extends layout
 append body
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet")
     link(rel='stylesheet' href='/stylesheets/style.css')
 
     .container-fluid
@@ -9,15 +11,14 @@ append body
 
     #indent
 
-        table(border="1")
-            thead
-            tbody
-            for object in listOfShifts
-                tr
-                    for subobject in object
-                        td= subobject
+        form(id="findByName" action="/calendar/shiftByName", method="post")
 
+            select(id="findName", name="findName")
+                option(value="" selected=true disabled=true) Navn
+                for intern in listOfNames
+                    option(value=intern.id) !{intern.navn}
 
+            button(type="submit", id='findByNameButton') Finn vakter
 
         -var last = 1;
         -var dups = [];
@@ -54,3 +55,9 @@ append body
                         - break
             -}
         -}
+
+
+    script.
+        $(document).ready(function () {
+            $("select").select2();
+        });

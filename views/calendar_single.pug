@@ -1,0 +1,19 @@
+extends layout
+append body
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet")
+    link(rel='stylesheet' href='/stylesheets/style.css')
+
+    .container-fluid
+        .row
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                h1.page-header Liste over vakter
+
+    #indent
+        table(border="1")
+            thead
+            tbody
+            for object in listOfShifts
+                tr
+                    for subobject in object
+                        td= subobject

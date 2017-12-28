@@ -76,7 +76,7 @@ router.post('/shiftByName',function (req,res) {
 
     con.query('select date, type, start_time, end_time, name from integrerbar2.vakter as vakter\n' +
         'inner join integrerbar2.skift as skift on vakter.skift_id = skift.id\n' +
-        'where intern_id = ? order by date', req.body.findName,function (err, rows) {
+        'where intern_id = ? and date >= CURDATE() order by date', req.body.findName,function (err, rows) {
 
         if(err) throw err;
 

@@ -8,8 +8,8 @@ let con;
 
 
 //TODO: Switch these two before pushing to master/prod
-//const connect = require('../connections');
-const connect = require('../localConnections');
+const connect = require('../connections');
+//const connect = require('../localConnections');
 
 
 let isAuthenticated = function (req, res, next) {

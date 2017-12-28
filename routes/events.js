@@ -3,8 +3,8 @@ const mysql = require('mysql');
 const router = express.Router();
 
 //TODO: Switch these two before pushing to master/prod
-//const connect = require('../connections');
-const connect = require('../localConnections');
+const connect = require('../connections');
+//const connect = require('../localConnections');
 
 // As with any middleware it is quintessential to call next()
 // if the user is authenticated

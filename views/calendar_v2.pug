@@ -15,7 +15,7 @@ append body
 
         form(id="findByName" action="/calendar/shiftByName", method="post")
 
-            select(id="findName", name="findName")
+            select(id="findName", name="findName" required)
                 option(value="" selected=true disabled=true) Navn
                 for intern in listOfNames
                     option(value=intern.id) !{intern.navn}

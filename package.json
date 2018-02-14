@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "async": "^2.5.0",
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.16.1",
     "bootstrap": "^3.3.7",
@@ -31,6 +31,7 @@
     "morgan": "~1.7.0",
     "mysql": "^2.13.0",
     "node-mysql": "^0.4.2",
+    "node-sass": "^4.7.2",
     "node-sass-middleware": "0.9.8",
     "nodemailer": "^4.3.1",
     "passport": "^0.3.2",

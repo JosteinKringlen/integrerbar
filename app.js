@@ -95,6 +95,10 @@ app.use('/forgot', forgot);
 app.use('/help', help);
 app.use('/events', events);
 app.use('/findShift', findShift);
+app.use(function (req,res) {
+    res.status(404);
+    res.render('404',{title:'404'});
+});
 
 app.post('/forgot', function(req, res, next) {
     async.waterfall([

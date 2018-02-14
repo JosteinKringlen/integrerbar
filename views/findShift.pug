@@ -15,6 +15,7 @@ append body
                     th="Dato"
                     th="Navn"
                     th="Velg"
+                    th="Slett"
             for day in listOfShift
                 tr
                     td= day.date
@@ -22,3 +23,6 @@ append body
                     td
                         form(id="test" action="/addShift", method="post")
                             button(type="submit" value=day.id style = "width:100%" name="choseEvent" id="choseEvent") Velg event
+                    td
+                        form(id="delete" action="/findShift/deleteEvent", method="post")
+                            button(type="submit" value=day.id style = "width:100%" name="deleteEvent" id="deleteEvent") Slett event

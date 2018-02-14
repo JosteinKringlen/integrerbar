@@ -37,4 +37,39 @@ router.get('/', isAuthenticated,function(req, res){
     con.end(function(err) {});
 
 });
+
+
+router.post('/deleteEvent', isAuthenticated,function(req, res) {
+
+    //let confirm = confirm("Er du sikker på du vil slette dette eventet");
+
+    //if(confirm) {
+
+        const con = mysql.createConnection({
+            host: connect.sqlUrl.host,
+            user: connect.sqlUrl.user,
+            password: connect.sqlUrl.password,
+            dateStrings: 'date'
+
+        });
+
+
+        let event = (req.body.deleteEvent);
+
+
+        con.query("delete from integrerbar2.skift where id = ?", [event], function (err, rows) {
+            if (err) throw err;
+
+
+        });
+
+        con.end(function (err) {
+        });
+    //}
+    res.redirect('/findShift');
+
+
+});
+
+
 module.exports = router;

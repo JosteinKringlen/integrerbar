@@ -24,4 +24,5 @@ append body
             for object in listOfShifts
                 tr
                     for subobject in object
-                        td= subobject
+                        if(subobject !== object.day)
+                            td= subobject
